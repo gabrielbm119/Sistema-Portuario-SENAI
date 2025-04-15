@@ -2,9 +2,6 @@ package com.example.BackEnd.Sistema.Portuario.SENAI.models;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "TBDOCA")
 public class DocaModel {
@@ -13,7 +10,18 @@ public class DocaModel {
     private Integer idDoca;
     private String nmDoca; //nome
     private Double cmDoca; //comprimento
-    //private List<Agendamento> agendamentos;
 
     // Getters e Setters
+
+    public Integer getIdDoca() { return idDoca; }
+
+    public void setIdDoca(Integer idDoca) { this.idDoca = idDoca; }
+
+    public String getNmDoca() { return nmDoca; }
+
+    public void setNmDoca(String nmDoca) { this.nmDoca = nmDoca; }
+
+    public Double getCmDoca() { return cmDoca; }
+
+    public void setCmDoca(Double cmDoca) { this.cmDoca = cmDoca; }
 }

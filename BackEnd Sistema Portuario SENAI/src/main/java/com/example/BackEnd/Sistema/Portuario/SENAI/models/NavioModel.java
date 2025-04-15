@@ -2,9 +2,6 @@ package com.example.BackEnd.Sistema.Portuario.SENAI.models;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "TBNAVIO")
 public class NavioModel {
@@ -14,8 +11,29 @@ public class NavioModel {
     private String nmNavio; //nome
     private String tpNavio; //tipo
     private Double cmNavio; //comprimento
-    //private Cliente clNavio; //cliente
-    //private List<Agendamento> agendamentos;
+
+    @ManyToOne
+    @JoinColumn(name = "idCliente") // cria a FK no banco
+    private ClienteModel clNavio; //cliente
 
     // Getters e Setters
+    public Integer getIdNavio() { return idNavio; }
+
+    public void setIdNavio(Integer idNavio) { this.idNavio = idNavio; }
+
+    public String getNmNavio() { return nmNavio; }
+
+    public void setNmNavio(String nmNavio) { this.nmNavio = nmNavio; }
+
+    public String getTpNavio() { return tpNavio; }
+
+    public void setTpNavio(String tpNavio) { this.tpNavio = tpNavio; }
+
+    public Double getCmNavio() { return cmNavio; }
+
+    public void setCmNavio(Double cmNavio) { this.cmNavio = cmNavio; }
+
+    public ClienteModel getClNavio() { return clNavio; }
+
+    public void setClNavio(ClienteModel clNavio) { this.clNavio = clNavio; }
 }

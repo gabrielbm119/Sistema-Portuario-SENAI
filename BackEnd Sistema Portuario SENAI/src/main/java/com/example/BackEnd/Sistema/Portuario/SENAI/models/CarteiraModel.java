@@ -10,7 +10,7 @@ public class CarteiraModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCarteira;
-    private BigDecimal sdCarteira;
+    private BigDecimal sdCarteira; //saldo
 
     @OneToOne
     @JoinColumn(name = "idCliente") // cria a FK no banco

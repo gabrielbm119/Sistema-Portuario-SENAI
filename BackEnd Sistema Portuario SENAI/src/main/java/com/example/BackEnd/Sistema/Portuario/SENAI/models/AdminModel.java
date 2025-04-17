@@ -6,30 +6,30 @@ import jakarta.persistence.*;
 @Table(name = "TBADMIN")
 public class AdminModel {
 
-    @Id
+    @Id @Column(name = "idAdmin") // nome da coluna no banco
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCliente;
-    private String nmCliente; //nome
-    private String emCliente; //email
-    private String snCliente; //senha
+    private Integer idAdmin;
+    private String nmAdmin; //nome
+    private String emAdmin; //email
+    private String snAdmin; //senha
     private String cdAdmin; //credencial
 
     // Getters e Setters
-    public Integer getIdCliente() { return idCliente; }
+    public Integer getIdAdmin() { return idAdmin; }
 
-    public void setIdCliente(Integer idCliente) { this.idCliente = idCliente; }
+    public void setIdAdmin(Integer idAdmin) { this.idAdmin = idAdmin; }
 
-    public String getNmCliente() { return nmCliente; }
+    public String getNmAdmin() { return nmAdmin; }
 
-    public void setNmCliente(String nmCliente) { this.nmCliente = nmCliente; }
+    public void setNmAdmin(String nmAdmin) { this.nmAdmin = nmAdmin; }
 
-    public String getEmCliente() { return emCliente; }
+    public String getEmAdmin() { return emAdmin; }
 
-    public void setEmCliente(String emCliente) { this.emCliente = emCliente; }
+    public void setEmAdmin(String emAdmin) { this.emAdmin = emAdmin; }
 
-    public String getSnCliente() { return snCliente; }
+    public String getSnAdmin() { return snAdmin; }
 
-    public void setSnCliente(String snCliente) { this.snCliente = snCliente; }
+    public void setSnAdmin(String snAdmin) { this.snAdmin = snAdmin; }
 
     public String getCdAdmin() { return cdAdmin; }
 

@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface NavioAgendamentoRepository extends JpaRepository<NavioAgendamentoModel, Integer> {
-    Optional<NavioAgendamentoModel> findById(int Id);
-    Optional<NavioAgendamentoModel> findAllById(int Id);
+    Optional<NavioAgendamentoModel> findByIdNavioAgendamento(int idNavioAgendamento);
+    Optional<NavioAgendamentoModel> findAllByIdNavioAgendamento(int idNavioAgendamento);
 }

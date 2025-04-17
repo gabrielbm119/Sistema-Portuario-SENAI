@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface DocaAgendamentoRepository extends JpaRepository<DocaAgendamentoModel, Integer> {
-    Optional<DocaAgendamentoModel> findById(int Id);
-    Optional<DocaAgendamentoModel> findAllById(int Id);
+    Optional<DocaAgendamentoModel> findByIdDocaAgendamento(int idDocaAgendamento);
+    Optional<DocaAgendamentoModel> findAllByIdDocaAgendamento(int idDocaAgendamento);
 }

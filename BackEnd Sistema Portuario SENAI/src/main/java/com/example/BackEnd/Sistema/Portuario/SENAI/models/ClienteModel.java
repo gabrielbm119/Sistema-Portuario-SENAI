@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "TBCLIENTE")
 public class ClienteModel {
 
-    @Id
+    @Id @Column(name = "idCliente") // nome da coluna no banco
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCliente;
     private String nmCliente; //nome

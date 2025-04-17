@@ -6,15 +6,15 @@ import jakarta.validation.constraints.Size;
 
 public record AdminRecordDto(
         @NotBlank(message = "O nome é obrigatório")
-        String nmCliente,
+        String nmAdmin,
 
         @NotBlank(message = "O e-mail é obrigatório")
         @Email(message = "Formato de e-mail inválido")
-        String emCliente,
+        String emAdmin,
 
         @NotBlank(message = "A senha é obrigatória")
         @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
-        String snCliente,
+        String snAdmin,
 
         @NotBlank(message = "A credencial é obrigatória")
         String cdAdmin

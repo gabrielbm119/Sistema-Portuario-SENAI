@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TBDEBITO")
 public class DebitoModel {
-    @Id
+    @Id @Column(name = "idDebito") // nome da coluna no banco
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDebito;
     private BigDecimal vlDebito; //valor

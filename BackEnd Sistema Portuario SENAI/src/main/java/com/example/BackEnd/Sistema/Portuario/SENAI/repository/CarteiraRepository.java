@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface CarteiraRepository extends JpaRepository<CarteiraModel, Integer> {
-    Optional<CarteiraModel> findById(int Id);
-    Optional<CarteiraModel> findAllById(int Id);
+    Optional<CarteiraModel> findByIdCarteira(int idCarteira);
+    Optional<CarteiraModel> findAllByIdCarteira(int idCarteira);
 }

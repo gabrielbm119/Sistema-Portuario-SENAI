@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TBAGENDAMENTO")
 public class AgendamentoModel {
-    @Id
+    @Id @Column(name = "idAgendamento") // nome da coluna no banco
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAgendamento;
     private LocalDateTime dgAgendamento; //data geração

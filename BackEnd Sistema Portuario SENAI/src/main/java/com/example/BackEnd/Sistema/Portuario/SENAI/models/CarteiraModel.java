@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "TBCARTEIRA")
 public class CarteiraModel {
-    @Id
+    @Id @Column(name = "idCarteira") // nome da coluna no banco
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCarteira;
     private BigDecimal sdCarteira; //saldo

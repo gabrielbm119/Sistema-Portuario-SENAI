@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface AdminRepository extends JpaRepository<AdminModel, Integer> {
-    Optional<AdminModel> findById(int Id);
-    Optional<AdminModel> findAllById(int Id);
+    Optional<AdminModel> findByIdAdmin(int idAdmin);
+    Optional<AdminModel> findAllByIdAdmin(int idAdmin);
 }

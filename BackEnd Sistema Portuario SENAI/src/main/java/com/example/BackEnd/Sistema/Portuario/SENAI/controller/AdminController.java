@@ -33,19 +33,19 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(adminRepository.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneAdmin(@PathVariable(value = "id") int id) {
-        Optional<AdminModel> admin = adminRepository.findById(id);
+    @GetMapping("/{idAdmin}")
+    public ResponseEntity<Object> getOneAdmin(@PathVariable(value = "idAdmin") int idAdmin) {
+        Optional<AdminModel> admin = adminRepository.findById(idAdmin);
         if (admin.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Administrador não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(admin.get());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateAdmin(@PathVariable(value = "id") int id,
+    @PutMapping("/{idAdmin}")
+    public ResponseEntity<Object> updateAdmin(@PathVariable(value = "idAdmin") int idAdmin,
                                               @RequestBody @Valid AdminRecordDto adminRecordDto) {
-        Optional<AdminModel> admin = adminRepository.findById(id);
+        Optional<AdminModel> admin = adminRepository.findById(idAdmin);
         if (admin.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Administrador não encontrado");
         }
@@ -54,9 +54,9 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(adminRepository.save(adminModel));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteAdmin(@PathVariable(value = "id") int id) {
-        Optional<AdminModel> admin = adminRepository.findById(id);
+    @DeleteMapping("/{idAdmin}")
+    public ResponseEntity<Object> deleteAdmin(@PathVariable(value = "idAdmin") int idAdmin) {
+        Optional<AdminModel> admin = adminRepository.findById(idAdmin);
         if (admin.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Administrador não encontrado");
         }

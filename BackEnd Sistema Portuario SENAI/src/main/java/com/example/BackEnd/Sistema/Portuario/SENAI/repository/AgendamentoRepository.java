@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface AgendamentoRepository extends JpaRepository<AgendamentoModel, Integer> {
-    Optional<AgendamentoModel> findById(int Id);
-    Optional<AgendamentoModel> findAllById(int Id);
+    Optional<AgendamentoModel> findByIdAgendamento(int idAgendamento);
+    Optional<AgendamentoModel> findAllByIdAgendamento(int idAgendamento);
 }
 

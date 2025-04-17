@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "TBDOCAAGENDAMENTO")
 public class DocaAgendamentoModel {
-    @Id
+    @Id @Column(name = "idDocaAgendamento") // nome da coluna no banco
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDocaAgendamento;
 

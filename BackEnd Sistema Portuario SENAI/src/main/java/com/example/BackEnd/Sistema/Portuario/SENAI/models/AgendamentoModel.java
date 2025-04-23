@@ -3,7 +3,9 @@ package com.example.BackEnd.Sistema.Portuario.SENAI.models;
 import com.example.BackEnd.Sistema.Portuario.SENAI.enums.StatusAgendamento;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "TBAGENDAMENTO")
@@ -11,9 +13,12 @@ public class AgendamentoModel {
     @Id @Column(name = "idAgendamento") // nome da coluna no banco
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAgendamento;
-    private LocalDateTime dgAgendamento; //data geração
-    private LocalDateTime diAgendamento; //data início
-    private LocalDateTime dfAgendamento; //data final
+    private LocalDate dgAgendamento; //data geração
+    private String hgAgendamento; //horário geração
+    private LocalDate diAgendamento; //data início
+    private String hiAgendamento; //horário início
+    private LocalDate dfAgendamento; //data final
+    private String hfAgendamento; //horário final
 
     @ManyToOne
     @JoinColumn(name = "idDoca") // cria a FK no banco
@@ -31,17 +36,29 @@ public class AgendamentoModel {
 
     public void setIdAgendamento(Integer idAgendamento) { this.idAgendamento = idAgendamento; }
 
-    public LocalDateTime getDgAgendamento() { return dgAgendamento; }
+    public LocalDate getDgAgendamento() { return dgAgendamento; }
 
-    public void setDgAgendamento(LocalDateTime dgAgendamento) { this.dgAgendamento = dgAgendamento; }
+    public void setDgAgendamento(LocalDate dgAgendamento) { this.dgAgendamento = dgAgendamento; }
 
-    public LocalDateTime getDiAgendamento() { return diAgendamento; }
+    public String getHgAgendamento() { return hgAgendamento; }
 
-    public void setDiAgendamento(LocalDateTime diAgendamento) { this.diAgendamento = diAgendamento; }
+    public void setHgAgendamento(String hgAgendamento) { this.hgAgendamento = hgAgendamento; }
 
-    public LocalDateTime getDfAgendamento() { return dfAgendamento; }
+    public LocalDate getDiAgendamento() { return diAgendamento; }
 
-    public void setDfAgendamento(LocalDateTime dfAgendamento) { this.dfAgendamento = dfAgendamento; }
+    public void setDiAgendamento(LocalDate diAgendamento) { this.diAgendamento = diAgendamento; }
+
+    public String getHiAgendamento() { return hiAgendamento; }
+
+    public void setHiAgendamento(String hiAgendamento) { this.hiAgendamento = hiAgendamento; }
+
+    public LocalDate getDfAgendamento() { return dfAgendamento; }
+
+    public void setDfAgendamento(LocalDate dfAgendamento) { this.dfAgendamento = dfAgendamento; }
+
+    public String getHfAgendamento() { return hfAgendamento; }
+
+    public void setHfAgendamento(String hfAgendamento) { this.hfAgendamento = hfAgendamento; }
 
     public DocaModel getDcAgendamento() { return dcAgendamento; }
 
@@ -54,4 +71,9 @@ public class AgendamentoModel {
     public StatusAgendamento getStAgentamento() { return stAgentamento; }
 
     public void setStAgentamento(StatusAgendamento stAgentamento) { this.stAgentamento = stAgentamento; }
+
+    public static String timeToString(LocalTime time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return formatter.format(time);
+    }
 }

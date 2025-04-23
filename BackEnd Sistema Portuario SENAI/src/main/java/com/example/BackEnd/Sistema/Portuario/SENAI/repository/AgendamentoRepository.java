@@ -11,4 +11,3 @@ public interface AgendamentoRepository extends JpaRepository<AgendamentoModel, I
     Optional<AgendamentoModel> findByIdAgendamento(int idAgendamento);
     Optional<AgendamentoModel> findAllByIdAgendamento(int idAgendamento);
 }
-

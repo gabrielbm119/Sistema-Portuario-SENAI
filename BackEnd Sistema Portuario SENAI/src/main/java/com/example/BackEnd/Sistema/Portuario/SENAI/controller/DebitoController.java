@@ -15,7 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,11 +36,6 @@ public class DebitoController {
 
     @PostMapping
     public ResponseEntity<Object> saveDebito(@RequestBody @Valid DebitoRecordDto dto) {
-        Optional<ClienteModel> clienteOpt = clienteRepository.findById(dto.idCliente());
-        if (clienteOpt.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
-        }
-
         Optional<AgendamentoModel> agendamentoOpt = agendamentoRepository.findById(dto.idAgendamento());
         if (agendamentoOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Agendamento não encontrado");
@@ -47,9 +43,11 @@ public class DebitoController {
 
         var debitoModel = new DebitoModel();
         BeanUtils.copyProperties(dto, debitoModel);
-        debitoModel.setClDebito(clienteOpt.get());
+        debitoModel.setClDebito(agendamentoOpt.get().getNvAgendamento().getClNavio());
         debitoModel.setAgDebito(agendamentoOpt.get());
-        debitoModel.setDgDebito(LocalDateTime.now());
+        debitoModel.setDgDebito(LocalDate.now());
+        debitoModel.setHgDebito(DebitoModel.timeToString(LocalTime.now()));
+        debitoModel.setDvDebito(dto.dvDebito());
         debitoModel.setStDebito(StatusDebito.PENDENTE);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(debitoRepository.save(debitoModel));
@@ -77,11 +75,6 @@ public class DebitoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Débito não encontrado");
         }
 
-        Optional<ClienteModel> clienteOpt = clienteRepository.findById(dto.idCliente());
-        if (clienteOpt.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
-        }
-
         Optional<AgendamentoModel> agendamentoOpt = agendamentoRepository.findById(dto.idAgendamento());
         if (agendamentoOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Agendamento não encontrado");
@@ -89,7 +82,7 @@ public class DebitoController {
 
         var debitoModel = debitoOpt.get();
         BeanUtils.copyProperties(dto, debitoModel);
-        debitoModel.setClDebito(clienteOpt.get());
+        debitoModel.setClDebito(agendamentoOpt.get().getNvAgendamento().getClNavio());
         debitoModel.setAgDebito(agendamentoOpt.get());
 
         return ResponseEntity.status(HttpStatus.OK).body(debitoRepository.save(debitoModel));

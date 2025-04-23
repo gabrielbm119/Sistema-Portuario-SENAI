@@ -14,7 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,9 +47,12 @@ public class AgendamentoController {
         }
 
         AgendamentoModel agendamento = new AgendamentoModel();
-        agendamento.setDgAgendamento(LocalDateTime.now());
+        agendamento.setDgAgendamento(LocalDate.now());
+        agendamento.setHgAgendamento(AgendamentoModel.timeToString(LocalTime.now()));
         agendamento.setDiAgendamento(dto.diAgendamento());
+        agendamento.setHiAgendamento(dto.hiAgendamento());
         agendamento.setDfAgendamento(dto.dfAgendamento());
+        agendamento.setHfAgendamento(dto.hfAgendamento());
         agendamento.setDcAgendamento(doca.get());
         agendamento.setNvAgendamento(navio.get());
         agendamento.setStAgentamento(StatusAgendamento.PENDENTE); // ou outro valor padrão
@@ -91,7 +95,9 @@ public class AgendamentoController {
 
         var agendamento = agendamentoOpt.get();
         agendamento.setDiAgendamento(dto.diAgendamento());
+        agendamento.setHiAgendamento(dto.hiAgendamento());
         agendamento.setDfAgendamento(dto.dfAgendamento());
+        agendamento.setHfAgendamento(dto.hfAgendamento());
         agendamento.setDcAgendamento(doca.get());
         agendamento.setNvAgendamento(navio.get());
 

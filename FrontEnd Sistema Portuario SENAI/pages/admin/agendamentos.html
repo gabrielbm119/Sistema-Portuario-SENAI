@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Agendamentos</title>
+</head>
+<body>
+    <h1>Gerenciar Agendamentos</h1>
+
+    <!-- Filtro por data -->
+    <section>
+        <label for="filtroData">Filtrar por data:</label>
+        <input type="date" id="filtroData">
+        <button id="filtrarBtn">Filtrar</button>
+    </section>
+
+    <!-- Lista de agendamentos -->
+    <section>
+        <h2>Lista de Agendamentos</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Navio</th>
+                    <th>Doca</th>
+                    <th>Período</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaAgendamentos">
+                <!-- Populado via JS -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Formulário de novo agendamento -->
+    <section>
+        <h2>Novo Agendamento</h2>
+        <input type="number" id="idNavio" placeholder="ID do Navio">
+        <input type="number" id="idDoca" placeholder="ID da Doca">
+        
+        <label>Data de Início:</label>
+        <input type="date" id="diAgendamento">
+        <label>Hora de Início:</label>
+        <input type="time" id="hiAgendamento">
+
+        <label>Data Final:</label>
+        <input type="date" id="dfAgendamento">
+        <label>Hora Final:</label>
+        <input type="time" id="hfAgendamento">
+
+        <button id="criarAgendamentoBtn">Criar Agendamento</button>
+    </section>
+
+    <!-- Formulário de edição -->
+    <section id="formularioEdicao" style="display: none;">
+        <h2>Editar Agendamento</h2>
+        <input type="number" id="idNavioEditar" placeholder="ID do Navio">
+        <input type="number" id="idDocaEditar" placeholder="ID da Doca">
+    
+        <label>Data de Início:</label>
+        <input type="date" id="diAgendamentoEditar">
+        <label>Hora de Início:</label>
+        <input type="time" id="hiAgendamentoEditar">
+    
+        <label>Data Final:</label>
+        <input type="date" id="dfAgendamentoEditar">
+        <label>Hora Final:</label>
+        <input type="time" id="hfAgendamentoEditar">
+    
+        <label>Status:</label>
+        <select id="stAgendamentoEditar">
+            <option value="PENDENTE">PENDENTE</option>
+            <option value="CONFIRMADO">CONFIRMADO</option>
+            <option value="ATRASADO">ATRASADO</option>
+            <option value="CANCELADO">CANCELADO</option>
+        </select>
+    
+        <button onclick="salvarEdicao()">Salvar</button>
+        <button onclick="cancelarEdicao()">Cancelar</button>
+    </section>    
+
+    <script src="../../js/admin/agendamentos.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+POPULADOR DE BD - SISTEMA PORTUARIO
+
+CARTEIRAS
+
+{
+    "sdCarteira": 1000.00,
+    "idCliente": 1
+}
+
+{
+    "sdCarteira": 2000.00,
+    "idCliente": 2
+}
+
+{
+    "sdCarteira": 1500.00,
+    "idCliente": 3
+}
+
+{
+    "sdCarteira": 800.00,
+    "idCliente": 4
+}
+
+{
+    "sdCarteira": 1200.00,
+    "idCliente": 5
+}
+
+{
+    "sdCarteira": 1100.00,
+    "idCliente": 6
+}
+
+{
+    "sdCarteira": 950.00,
+    "idCliente": 7
+}
+
+{
+    "sdCarteira": 1750.00,
+    "idCliente": 8
+}
+
+{
+    "sdCarteira": 3000.00,
+    "idCliente": 9
+}
+
+{
+    "sdCarteira": 5000.00,
+    "idCliente": 10
+}

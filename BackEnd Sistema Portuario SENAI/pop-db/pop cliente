@@ -1,0 +1,83 @@
+POPULADOR DE BD - SISTEMA PORTUARIO
+
+CLIENTES
+
+{
+    "nmCliente": "Cliente 1",
+	"emCliente": "cliente1@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000195",
+	"tfCliente": "11987654321"
+}
+
+{
+	"nmCliente": "Cliente 2",
+	"emCliente": "cliente2@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000196",
+	"tfCliente": "11987654322"
+}
+
+{
+	"nmCliente": "Cliente 3",
+	"emCliente": "cliente3@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000197",
+	"tfCliente": "11987654323"
+}
+
+{
+	"nmCliente": "Cliente 4",
+	"emCliente": "cliente4@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000198",
+	"tfCliente": "11987654324"
+}
+
+{
+	"nmCliente": "Cliente 5",
+	"emCliente": "cliente5@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000199",
+	"tfCliente": "11987654325"
+}
+
+{
+	"nmCliente": "Cliente 6",
+	"emCliente": "cliente6@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000100",
+	"tfCliente": "11987654326"
+}
+
+{
+	"nmCliente": "Cliente 7",
+	"emCliente": "cliente7@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000101",
+	"tfCliente": "11987654327"
+}
+
+{
+	"nmCliente": "Cliente 8",
+	"emCliente": "cliente8@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000102",
+	"tfCliente": "11987654328"
+}
+
+{
+	"nmCliente": "Cliente 9",
+	"emCliente": "cliente9@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000103",
+	"tfCliente": "11987654329"
+}
+
+{
+	"nmCliente": "Cliente 10",
+	"emCliente": "cliente10@email.com",
+	"snCliente": "senha123",
+	"pjCliente": "12345678000104",
+	"tfCliente": "11987654330"
+}

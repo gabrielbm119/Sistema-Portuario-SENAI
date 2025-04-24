@@ -1,0 +1,45 @@
+POPULADOR DE BD - SISTEMA PORTUARIO
+
+NAVIOS
+
+{
+    "nmNavio": "Navio 1 Cliente 1",
+    "tpNavio": "Container",
+    "cmNavio": 200.5,
+    "idCliente": 1
+}
+
+{
+    "nmNavio": "Navio 2 Cliente 1",
+    "tpNavio": "Petroleiro",
+    "cmNavio": 300.2,
+    "idCliente": 1
+}
+
+{
+    "nmNavio": "Navio 1 Cliente 2",
+    "tpNavio": "Container",
+    "cmNavio": 250.5,
+    "idCliente": 2
+}
+
+{
+    "nmNavio": "Navio 2 Cliente 2",
+    "tpNavio": "Carga",
+    "cmNavio": 280.3,
+    "idCliente": 2
+}
+
+{
+    "nmNavio": "Navio 1 Cliente 3",
+    "tpNavio": "Carga",
+    "cmNavio": 180.4,
+    "idCliente": 3
+}
+
+{
+    "nmNavio": "Navio 2 Cliente 3",
+    "tpNavio": "Petroleiro",
+    "cmNavio": 220.1,
+    "idCliente": 3
+}

@@ -1,0 +1,24 @@
+POPULADOR DE BD - SISTEMA PORTUARIO
+
+ADMINS
+
+{
+    "nmAdmin": "Admin 1",
+    "emAdmin": "admin1@email.com",
+    "snAdmin": "senha123",
+    "cdAdmin": "admin1cred"
+}
+
+{
+    "nmAdmin": "Admin 2",
+    "emAdmin": "admin2@email.com",
+    "snAdmin": "senha123",
+    "cdAdmin": "admin2cred"
+}
+
+{
+    "nmAdmin": "Admin 3",
+    "emAdmin": "admin3@email.com",
+    "snAdmin": "senha123",
+    "cdAdmin": "admin3cred"
+}

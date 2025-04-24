@@ -1,0 +1,23 @@
+POPULADOR DE BD - SISTEMA PORTUARIO
+
+DOCAS
+
+{
+    "nmDoca": "Doca 1",
+    "cmDoca": 300.0
+}
+
+{
+    "nmDoca": "Doca 2",
+    "cmDoca": 400.0
+}
+
+{
+    "nmDoca": "Doca 3",
+    "cmDoca": 500.0
+}
+
+{
+    "nmDoca": "Doca 4",
+    "cmDoca": 600.0
+}

@@ -2,12 +2,8 @@ package com.example.BackEnd.Sistema.Portuario.SENAI.controller;
 
 import com.example.BackEnd.Sistema.Portuario.SENAI.dto.AgendamentoRecordDto;
 import com.example.BackEnd.Sistema.Portuario.SENAI.enums.StatusAgendamento;
-import com.example.BackEnd.Sistema.Portuario.SENAI.models.AgendamentoModel;
-import com.example.BackEnd.Sistema.Portuario.SENAI.models.DocaModel;
-import com.example.BackEnd.Sistema.Portuario.SENAI.models.NavioModel;
-import com.example.BackEnd.Sistema.Portuario.SENAI.repository.AgendamentoRepository;
-import com.example.BackEnd.Sistema.Portuario.SENAI.repository.DocaRepository;
-import com.example.BackEnd.Sistema.Portuario.SENAI.repository.NavioRepository;
+import com.example.BackEnd.Sistema.Portuario.SENAI.models.*;
+import com.example.BackEnd.Sistema.Portuario.SENAI.repository.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +29,12 @@ public class AgendamentoController {
     @Autowired
     NavioRepository navioRepository;
 
+    @Autowired
+    NavioAgendamentoRepository navioAgendamentoRepository;
+
+    @Autowired
+    DocaAgendamentoRepository docaAgendamentoRepository;
+
     @PostMapping
     public ResponseEntity<Object> saveAgendamento(@RequestBody @Valid AgendamentoRecordDto dto) {
         Optional<DocaModel> doca = docaRepository.findById(dto.idDoca());
@@ -57,7 +59,22 @@ public class AgendamentoController {
         agendamento.setNvAgendamento(navio.get());
         agendamento.setStAgentamento(StatusAgendamento.PENDENTE); // ou outro valor padrão
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoRepository.save(agendamento));
+        // Salva o agendamento
+        AgendamentoModel agendamentoSalvo = agendamentoRepository.save(agendamento);
+
+        // Cria relacionamento com Navio -> NavioAgendamento
+        NavioAgendamentoModel navioAgendamento = new NavioAgendamentoModel();
+        navioAgendamento.setNvNavioAgendamento(navio.get());
+        navioAgendamento.setAgNavioAgendamento(agendamentoSalvo);
+        navioAgendamentoRepository.save(navioAgendamento);
+
+        // Cria relacionamento com Doca -> DocaAgendamento
+        DocaAgendamentoModel docaAgendamento = new DocaAgendamentoModel();
+        docaAgendamento.setAgDocaAgendamento(agendamentoSalvo);
+        docaAgendamento.setDcDocaAgendamento(doca.get());
+        docaAgendamentoRepository.save(docaAgendamento);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoSalvo);
     }
 
     @GetMapping
@@ -100,8 +117,43 @@ public class AgendamentoController {
         agendamento.setHfAgendamento(dto.hfAgendamento());
         agendamento.setDcAgendamento(doca.get());
         agendamento.setNvAgendamento(navio.get());
+        agendamento.setStAgentamento(dto.stAgendamento());
 
-        return ResponseEntity.status(HttpStatus.OK).body(agendamentoRepository.save(agendamento));
+        AgendamentoModel agendamentoAtualizado = agendamentoRepository.save(agendamento);
+
+        // Verifica se já existe um relacionamento entre esse agendamento e algum navio
+        Optional<NavioAgendamentoModel> relacionamentoNavioExistente = navioAgendamentoRepository
+                .findByAgNavioAgendamento(agendamento);
+
+        if (relacionamentoNavioExistente.isPresent()) {
+            NavioAgendamentoModel navioAgendamento = relacionamentoNavioExistente.get();
+            navioAgendamento.setNvNavioAgendamento(navio.get()); // atualiza navio se necessário
+            navioAgendamentoRepository.save(navioAgendamento);
+        } else {
+            // cria novo relacionamento se não existir
+            NavioAgendamentoModel novoRelacionamento = new NavioAgendamentoModel();
+            novoRelacionamento.setAgNavioAgendamento(agendamentoAtualizado);
+            novoRelacionamento.setNvNavioAgendamento(navio.get());
+            navioAgendamentoRepository.save(novoRelacionamento);
+        }
+
+        // Verifica se já existe um relacionamento entre esse agendamento e alguma doca
+        Optional<DocaAgendamentoModel> relacionamentoDocaExistente = docaAgendamentoRepository
+                .findByAgDocaAgendamento(agendamento);
+
+        if (relacionamentoDocaExistente.isPresent()) {
+            DocaAgendamentoModel docaAgendamento = relacionamentoDocaExistente.get();
+            docaAgendamento.setDcDocaAgendamento(doca.get()); // atualiza doca se necessário
+            docaAgendamentoRepository.save(docaAgendamento);
+        } else {
+            // cria novo relacionamento se não existir
+            DocaAgendamentoModel novoRelacionamento = new DocaAgendamentoModel();
+            novoRelacionamento.setAgDocaAgendamento(agendamentoAtualizado);
+            novoRelacionamento.setDcDocaAgendamento(doca.get());
+            docaAgendamentoRepository.save(novoRelacionamento);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(agendamentoAtualizado);
     }
 
     @DeleteMapping("/{idAgendamento}")

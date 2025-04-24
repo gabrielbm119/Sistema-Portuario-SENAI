@@ -27,5 +27,5 @@ public record AgendamentoRecordDto(
         @NotNull(message = "O ID do navio é obrigatório")
         Integer idNavio,
 
-        StatusAgendamento statusAgendamento
+        StatusAgendamento stAgendamento
 ) {}

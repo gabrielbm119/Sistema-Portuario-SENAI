@@ -8,6 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ClienteDebitoRepository extends JpaRepository<ClienteDebitoModel, Integer> {
-    Optional<ClienteDebitoModel> findByIdClienteDebito(int idClienteDebito);
-    Optional<ClienteDebitoModel> findAllByIdClienteDebito(int idClienteDebito);
+    Optional<ClienteDebitoModel> findByDbClienteDebito_IdDebito(Integer idDebito);
 }

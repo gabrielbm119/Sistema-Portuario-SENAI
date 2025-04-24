@@ -21,5 +21,5 @@ public record DebitoRecordDto(
         @NotNull(message = "O ID do agendamento é obrigatório")
         Integer idAgendamento,
 
-        StatusDebito statusDebito
+        StatusDebito stDebito
 ) {}

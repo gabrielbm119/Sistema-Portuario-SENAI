@@ -3,10 +3,11 @@ package com.example.BackEnd.Sistema.Portuario.SENAI.controller;
 import com.example.BackEnd.Sistema.Portuario.SENAI.dto.DebitoRecordDto;
 import com.example.BackEnd.Sistema.Portuario.SENAI.enums.StatusDebito;
 import com.example.BackEnd.Sistema.Portuario.SENAI.models.AgendamentoModel;
+import com.example.BackEnd.Sistema.Portuario.SENAI.models.ClienteDebitoModel;
 import com.example.BackEnd.Sistema.Portuario.SENAI.models.ClienteModel;
 import com.example.BackEnd.Sistema.Portuario.SENAI.models.DebitoModel;
 import com.example.BackEnd.Sistema.Portuario.SENAI.repository.AgendamentoRepository;
-import com.example.BackEnd.Sistema.Portuario.SENAI.repository.ClienteRepository;
+import com.example.BackEnd.Sistema.Portuario.SENAI.repository.ClienteDebitoRepository;
 import com.example.BackEnd.Sistema.Portuario.SENAI.repository.DebitoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -29,10 +30,10 @@ public class DebitoController {
     DebitoRepository debitoRepository;
 
     @Autowired
-    ClienteRepository clienteRepository;
+    AgendamentoRepository agendamentoRepository;
 
     @Autowired
-    AgendamentoRepository agendamentoRepository;
+    ClienteDebitoRepository clienteDebitoRepository;
 
     @PostMapping
     public ResponseEntity<Object> saveDebito(@RequestBody @Valid DebitoRecordDto dto) {
@@ -50,7 +51,18 @@ public class DebitoController {
         debitoModel.setDvDebito(dto.dvDebito());
         debitoModel.setStDebito(StatusDebito.PENDENTE);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(debitoRepository.save(debitoModel));
+        // Salvar Débito
+        DebitoModel debitoSalvo = debitoRepository.save(debitoModel);
+
+        // Criar ClienteDebito
+        ClienteDebitoModel clienteDebito = new ClienteDebitoModel();
+        clienteDebito.setClClienteDebito(debitoSalvo.getClDebito());
+        clienteDebito.setDbClienteDebito(debitoSalvo);
+
+        // Salvar relação ClienteDebito
+        clienteDebitoRepository.save(clienteDebito);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(debitoSalvo);
     }
 
     @GetMapping
@@ -80,12 +92,32 @@ public class DebitoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Agendamento não encontrado");
         }
 
-        var debitoModel = debitoOpt.get();
-        BeanUtils.copyProperties(dto, debitoModel);
-        debitoModel.setClDebito(agendamentoOpt.get().getNvAgendamento().getClNavio());
-        debitoModel.setAgDebito(agendamentoOpt.get());
+        DebitoModel debitoModel = debitoOpt.get();
+        ClienteModel clienteAnterior = debitoModel.getClDebito();
 
-        return ResponseEntity.status(HttpStatus.OK).body(debitoRepository.save(debitoModel));
+        // Atualiza campos do débito
+        BeanUtils.copyProperties(dto, debitoModel);
+        ClienteModel clienteNovo = agendamentoOpt.get().getNvAgendamento().getClNavio();
+        debitoModel.setClDebito(clienteNovo);
+        debitoModel.setAgDebito(agendamentoOpt.get());
+        debitoModel.setStDebito(dto.stDebito());
+
+        DebitoModel debitoAtualizado = debitoRepository.save(debitoModel);
+
+        // Verifica se o cliente foi alterado
+        if (!clienteAnterior.getIdCliente().equals(clienteNovo.getIdCliente())) {
+            // Atualiza a entrada em ClienteDebito
+            ClienteDebitoModel clienteDebito = clienteDebitoRepository
+                    .findByDbClienteDebito_IdDebito(idDebito)
+                    .orElse(null);
+
+            if (clienteDebito != null) {
+                clienteDebito.setClClienteDebito(clienteNovo);
+                clienteDebitoRepository.save(clienteDebito);
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(debitoAtualizado);
     }
 
     @DeleteMapping("/{idDebito}")

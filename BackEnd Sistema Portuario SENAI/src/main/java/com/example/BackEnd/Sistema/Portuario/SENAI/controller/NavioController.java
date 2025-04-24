@@ -2,8 +2,10 @@ package com.example.BackEnd.Sistema.Portuario.SENAI.controller;
 
 import com.example.BackEnd.Sistema.Portuario.SENAI.dto.NavioRecordDto;
 import com.example.BackEnd.Sistema.Portuario.SENAI.models.ClienteModel;
+import com.example.BackEnd.Sistema.Portuario.SENAI.models.ClienteNavioModel;
 import com.example.BackEnd.Sistema.Portuario.SENAI.models.NavioModel;
 import com.example.BackEnd.Sistema.Portuario.SENAI.repository.ClienteRepository;
+import com.example.BackEnd.Sistema.Portuario.SENAI.repository.ClienteNavioRepository;
 import com.example.BackEnd.Sistema.Portuario.SENAI.repository.NavioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +28,9 @@ public class NavioController {
     @Autowired
     ClienteRepository clienteRepository;
 
+    @Autowired
+    ClienteNavioRepository clienteNavioRepository;
+
     @PostMapping
     public ResponseEntity<Object> saveNavio(@RequestBody @Valid NavioRecordDto dto) {
         Optional<ClienteModel> cliente = clienteRepository.findById(dto.idCliente());
@@ -37,7 +42,15 @@ public class NavioController {
         BeanUtils.copyProperties(dto, navioModel);
         navioModel.setClNavio(cliente.get());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(navioRepository.save(navioModel));
+        NavioModel navioSalvo = navioRepository.save(navioModel);
+
+        // Criar entrada na ClienteNavio
+        ClienteNavioModel clienteNavio = new ClienteNavioModel();
+        clienteNavio.setClClienteNavio(cliente.get());
+        clienteNavio.setNvClienteNavio(navioSalvo);
+        clienteNavioRepository.save(clienteNavio);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(navioSalvo);
     }
 
     @GetMapping
@@ -67,11 +80,26 @@ public class NavioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
         }
 
-        var navioModel = navioOpt.get();
-        BeanUtils.copyProperties(dto, navioModel);
-        navioModel.setClNavio(cliente.get());
+        NavioModel navioModel = navioOpt.get();
+        ClienteModel clienteAnterior = navioModel.getClNavio();
 
-        return ResponseEntity.status(HttpStatus.OK).body(navioRepository.save(navioModel));
+        BeanUtils.copyProperties(dto, navioModel);
+        ClienteModel novoCliente = cliente.get();
+        navioModel.setClNavio(novoCliente);
+
+        NavioModel navioAtualizado = navioRepository.save(navioModel);
+
+        // Se cliente mudou, atualiza ClienteNavio
+        if (!clienteAnterior.getIdCliente().equals(novoCliente.getIdCliente())) {
+            Optional<ClienteNavioModel> clienteNavioOpt = clienteNavioRepository.findByNvClienteNavio_IdNavio(idNavio);
+            if (clienteNavioOpt.isPresent()) {
+                ClienteNavioModel clienteNavio = clienteNavioOpt.get();
+                clienteNavio.setClClienteNavio(novoCliente);
+                clienteNavioRepository.save(clienteNavio);
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(navioAtualizado);
     }
 
     @DeleteMapping("/{idNavio}")

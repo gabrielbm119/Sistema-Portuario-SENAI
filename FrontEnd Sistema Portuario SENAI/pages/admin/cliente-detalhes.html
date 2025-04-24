@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Detalhes do Cliente</title>
+</head>
+<body>
+  <h1>Detalhes do Cliente</h1>
+
+  <section id="dadosCliente">
+    <h2>Informações</h2>
+    <p><strong>Nome:</strong> <span id="nomeCliente"></span></p>
+    <p><strong>Email:</strong> <span id="emailCliente"></span></p>
+    <p><strong>CNPJ:</strong> <span id="cnpjCliente"></span></p>
+    <p><strong>Telefone:</strong> <span id="telefoneCliente"></span></p>
+    <p><strong>Saldo Carteira:</strong> R$ <span id="saldoCarteira"></span></p>
+
+    <button onclick="mostrarFormularioEdicao()">Editar</button>
+    <button onclick="deletarCliente()">Deletar</button>
+  </section>
+
+  <section id="formularioEdicao" style="display: none;">
+    <h2>Editar Cliente</h2>
+    <input type="text" id="nmClienteEditar" placeholder="Nome">
+    <input type="email" id="emClienteEditar" placeholder="Email">
+    <input type="text" id="pjClienteEditar" placeholder="CNPJ">
+    <input type="text" id="tfClienteEditar" placeholder="Telefone">
+    <button onclick="salvarEdicao()">Salvar</button>
+    <button onclick="cancelarEdicao()">Cancelar</button>
+  </section>
+
+  <section>
+    <h2>Acessos</h2>
+    <button onclick="irParaFinanceiro()">Financeiro</button>
+    <button onclick="irParaNavios()">Navios</button>
+  </section>
+
+  <script src="../../js/admin/cliente-detalhes.js"></script>
+</body>
+</html>

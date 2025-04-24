@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gerenciar Clientes</title>
+</head>
+<body>
+  <h1>Gerenciar Clientes</h1>
+
+  <!-- Lista de Clientes -->
+  <section>
+    <h2>Lista de Clientes</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>CNPJ</th>
+          <th>Telefone</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaClientes">
+        <!-- Populado via JS -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Formulário para novo cliente -->
+  <section>
+    <h2>Novo Cliente</h2>
+    <input type="text" id="nmCliente" placeholder="Nome">
+    <input type="email" id="emCliente" placeholder="Email">
+    <input type="password" id="snCliente" placeholder="Senha">
+    <input type="text" id="pjCliente" placeholder="CNPJ">
+    <input type="text" id="tfCliente" placeholder="Telefone">
+    <button id="criarClienteBtn">Criar Cliente</button>
+  </section>
+
+  <script src="../../js/admin/clientes.js"></script>
+</body>
+</html>

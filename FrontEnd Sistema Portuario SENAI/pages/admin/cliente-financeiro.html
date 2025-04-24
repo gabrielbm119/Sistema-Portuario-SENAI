@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Financeiro do Cliente</title>
+</head>
+<body>
+  <h1>Financeiro do Cliente</h1>
+
+  <p><strong>Saldo da Carteira:</strong> R$ <span id="saldoCarteira"></span></p>
+
+  <!-- Lista de Débitos -->
+  <section>
+    <h2>Débitos</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Valor</th>
+          <th>Status</th>
+          <th>Data de Geração</th>
+          <th>Data de Validade</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaDebitos">
+        <!-- Populado via JS -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Formulário para novo débito -->
+  <section>
+    <h2>Novo Débito</h2>
+    <input type="number" id="idAgendamento" placeholder="ID do Agendamento">
+    <input type="number" id="vlDebito" placeholder="Valor do Débito">
+    <input type="date" id="dvDebito" placeholder="Data de Validade">
+    <button onclick="criarDebito()">Criar Débito</button>
+  </section>
+
+  <script src="../../js/admin/cliente-financeiro.js"></script>
+</body>
+</html>

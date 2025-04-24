@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gerenciar Docas</title>
+</head>
+<body>
+  <h1>Gerenciar Docas</h1>
+
+  <!-- Lista de Docas -->
+  <section>
+    <h2>Lista de Docas</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Comprimento (m)</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaDocas">
+        <!-- Populado via JS -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Formulário para nova doca -->
+  <section>
+    <h2>Nova Doca</h2>
+    <input type="text" id="nmDoca" placeholder="Nome da Doca">
+    <input type="number" id="cmDoca" placeholder="Comprimento (m)">
+    <button id="criarDocaBtn">Criar Doca</button>
+  </section>
+
+  <!-- Formulário de edição -->
+  <section id="formularioEdicao" style="display: none;">
+    <h2>Editar Doca</h2>
+    <input type="text" id="nmDocaEditar" placeholder="Nome da Doca">
+    <input type="number" id="cmDocaEditar" placeholder="Comprimento (m)">
+    <button onclick="salvarEdicao()">Salvar</button>
+    <button onclick="cancelarEdicao()">Cancelar</button>
+  </section>
+
+  <script src="../../js/admin/docas.js"></script>
+</body>
+</html>

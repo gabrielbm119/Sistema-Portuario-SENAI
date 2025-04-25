@@ -7,10 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarDebito();
 });
 
+let debitoGlobal; // Variável global
+
 function carregarDebito() {
   fetch(debitoUrl)
     .then(res => res.json())
     .then(debito => {
+      debitoGlobal = debito; // Guarda globalmente
       mostrarDebito(debito);
       if (debito.stDebito === "PENDENTE") {
         document.getElementById("pagarBtn").style.display = "inline-block";
@@ -37,9 +40,9 @@ function pagarDebito() {
     .then(carteiras => {
       const carteira = carteiras.find(c => c.clCarteira.idCliente == clienteId);
       if (!carteira) return alert("Carteira não encontrada.");
-      if (carteira.sdCarteira < debito.vlDebito) return alert("Saldo insuficiente.");
+      if (carteira.sdCarteira < debitoGlobal.vlDebito) return alert("Saldo insuficiente.");
 
-      carteira.sdCarteira -= debito.vlDebito;
+      carteira.sdCarteira -= debitoGlobal.vlDebito;
 
       return fetch(`http://localhost:8083/carteira/${carteira.idCarteira}`, {
         method: "PUT",
@@ -51,25 +54,21 @@ function pagarDebito() {
       });
     })
     .then(() => {
-      return fetch(`http://localhost:8083/debito/${debitoId}`)
-        .then(res => res.json())
-        .then(debito => {
-          debito.dpDebito = new Date().toISOString().split("T")[0];
-          debito.hpDebito = new Date().toLocaleTimeString();
-          debito.stDebito = "PAGO";
+      debitoGlobal.dpDebito = new Date().toISOString().split("T")[0];
+      debitoGlobal.hpDebito = new Date().toLocaleTimeString();
+      debitoGlobal.stDebito = "PAGO";
 
-          return fetch(`http://localhost:8083/debito/${debitoId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              vlDebito: debito.vlDebito,
-              dvDebito: debito.dvDebito,
-              idCliente: debito.clDebito.idCliente,
-              idAgendamento: debito.agDebito.idAgendamento,
-              stDebito: debito.stDebito
-            })
-          });
-        });
+      return fetch(`http://localhost:8083/debito/${debitoId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          vlDebito: debitoGlobal.vlDebito,
+          dvDebito: debitoGlobal.dvDebito,
+          idCliente: debitoGlobal.clDebito.idCliente,
+          idAgendamento: debitoGlobal.agDebito.idAgendamento,
+          stDebito: debitoGlobal.stDebito
+        })
+      });
     })
     .then(() => {
       alert("Pagamento efetuado com sucesso!");

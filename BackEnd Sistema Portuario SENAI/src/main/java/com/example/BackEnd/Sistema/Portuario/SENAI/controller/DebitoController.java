@@ -2,11 +2,9 @@ package com.example.BackEnd.Sistema.Portuario.SENAI.controller;
 
 import com.example.BackEnd.Sistema.Portuario.SENAI.dto.DebitoRecordDto;
 import com.example.BackEnd.Sistema.Portuario.SENAI.enums.StatusDebito;
-import com.example.BackEnd.Sistema.Portuario.SENAI.models.AgendamentoModel;
-import com.example.BackEnd.Sistema.Portuario.SENAI.models.ClienteDebitoModel;
-import com.example.BackEnd.Sistema.Portuario.SENAI.models.ClienteModel;
-import com.example.BackEnd.Sistema.Portuario.SENAI.models.DebitoModel;
+import com.example.BackEnd.Sistema.Portuario.SENAI.models.*;
 import com.example.BackEnd.Sistema.Portuario.SENAI.repository.AgendamentoRepository;
+import com.example.BackEnd.Sistema.Portuario.SENAI.repository.CarteiraRepository;
 import com.example.BackEnd.Sistema.Portuario.SENAI.repository.ClienteDebitoRepository;
 import com.example.BackEnd.Sistema.Portuario.SENAI.repository.DebitoRepository;
 import jakarta.validation.Valid;
@@ -34,6 +32,9 @@ public class DebitoController {
 
     @Autowired
     ClienteDebitoRepository clienteDebitoRepository;
+
+    @Autowired
+    CarteiraRepository carteiraRepository;
 
     @PostMapping
     public ResponseEntity<Object> saveDebito(@RequestBody @Valid DebitoRecordDto dto) {
@@ -77,6 +78,48 @@ public class DebitoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Débito não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(debito.get());
+    }
+
+    @PutMapping("/pagar/{idDebito}")
+    public ResponseEntity<Object> pagarDebito(@PathVariable int idDebito) {
+        Optional<DebitoModel> debitoOpt = debitoRepository.findById(idDebito);
+        if (debitoOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Débito não encontrado");
+        }
+
+        DebitoModel debito = debitoOpt.get();
+
+        if (debito.getStDebito() == StatusDebito.PAGO) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Débito já está pago.");
+        }
+
+        ClienteModel cliente = debito.getClDebito();
+        Optional<CarteiraModel> carteiraOpt = carteiraRepository
+                .findAll()
+                .stream()
+                .filter(c -> c.getClCarteira().getIdCliente().equals(cliente.getIdCliente()))
+                .findFirst();
+
+        if (carteiraOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carteira do cliente não encontrada");
+        }
+
+        CarteiraModel carteira = carteiraOpt.get();
+        if (carteira.getSdCarteira().compareTo(debito.getVlDebito()) < 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo insuficiente na carteira");
+        }
+
+        // Deduz o valor e atualiza a carteira
+        carteira.setSdCarteira(carteira.getSdCarteira().subtract(debito.getVlDebito()));
+        carteiraRepository.save(carteira);
+
+        // Atualiza o débito
+        debito.setStDebito(StatusDebito.PAGO);
+        debito.setDpDebito(LocalDate.now());
+        debito.setHpDebito(DebitoModel.timeToString(LocalTime.now()));
+        debitoRepository.save(debito);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Débito pago com sucesso");
     }
 
     @PutMapping("/{idDebito}")

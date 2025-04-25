@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Financeiro - Cliente</title>
+</head>
+<body>
+  <h1>Minha Carteira</h1>
+  <p>Saldo atual: R$ <span id="saldoCarteira">0.00</span></p>
+
+  <input type="number" id="valor" placeholder="Valor" step="0.01" />
+  <button onclick="adicionarSaldo()">Adicionar</button>
+  <button onclick="resgatarSaldo()">Resgatar</button>
+
+  <h2>Débitos</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Valor</th>
+        <th>Status</th>
+        <th>Detalhes</th>
+      </tr>
+    </thead>
+    <tbody id="tabelaDebitosCliente">
+      <!-- Populado via JS -->
+    </tbody>
+  </table>
+
+  <script src="../../js/cliente/financeiro.js"></script>
+</body>
+</html>
